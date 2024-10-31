@@ -23,7 +23,8 @@ public class UserRestController {
 	public Map<String, Object> isDuplicatedId(
 			@RequestParam("loginId") String loginId) {
 		
-		// DB SELECT breakpoint 2
+		// DB SELECT breakpoint 2. Entity, Repository, XML, BO 생성 전 yml 업데이트
+		UserEntity user = userBO.getUserEntityByLoginId(loginId);
 		
 		
 		// 응답값 breakpoint 1(Console 창에서 쿼리문 확인)
