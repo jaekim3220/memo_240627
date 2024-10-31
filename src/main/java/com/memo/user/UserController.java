@@ -25,5 +25,14 @@ public class UserController {
 	}
 	
 	
+	@GetMapping("/sign-in-view")
+	// http:localhost/user/sign-in-view
+	public String signInView() {
+		// 가운데 Layout(section) 조각만 내려주면
+		// 전체 Layout과 함께 구성된다
+		return "user/signIn";
+	}
+	
+	
 	
 }
