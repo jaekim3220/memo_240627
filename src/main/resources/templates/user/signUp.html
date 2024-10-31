@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/defaultLayout}">
+
+	<!-- section 영역 : Layout 문법 사용 -->
+	<section layout:fragment="content" class="contents bg-info d-flex justify-content-center">
+		<div class="w-50">
+			회원가입
+		</div>
+	</section>
+	
+	
+	<!-- JS 영역 -->
+	<th:block layout:fragment="script">
+		<script>
+			
+		</script>
+	</th:block>
+
+</html>

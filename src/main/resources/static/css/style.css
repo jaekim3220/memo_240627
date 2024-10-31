@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/* body {
+	background-color: #999
+} */
+
+header, footer {
+	height:100px;
+}
+
+.contents {
+	min-height:500px;
+}
