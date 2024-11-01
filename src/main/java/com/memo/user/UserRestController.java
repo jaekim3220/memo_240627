@@ -14,6 +14,9 @@ import com.memo.common.EncryptUtils;
 import com.memo.user.bo.UserBO;
 import com.memo.user.entity.UserEntity;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
@@ -89,7 +92,8 @@ public class UserRestController {
 	@PostMapping("/sign-in")
 	public Map<String, Object> signIn(
 			@RequestParam("loginId") String loginId,
-			@RequestParam("password") String password) {
+			@RequestParam("password") String password,
+			HttpServletRequest request) {
 		
 		// DB SELECT breakpoint 2(데이터가 있는 경우 : user, 없는 경우 : null)
 		UserEntity user = userBO.getUserEntityByLoginIdPassword(loginId, password);
@@ -98,6 +102,12 @@ public class UserRestController {
 		// 응답값 breakpoint 1(Console 창에서 쿼리문 확인)
 		Map<String, Object> result = new HashMap<>();
 		if(user != null) {
+			// session에 사용자 정보를 담는다(사용자 각각 담는다) => 로그인한 사용자 만큼 생성됨
+			HttpSession session = request.getSession(); // session 생성
+			session.setAttribute("userId", user.getId()); // session에 삽입
+			session.setAttribute("userLoginId", user.getLoginId()); // session에 삽입
+			session.setAttribute("userName", user.getName()); // session에 삽입
+			
 			result.put("code", 200);
 			result.put("result", "성공");
 		} else {
