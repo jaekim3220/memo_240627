@@ -59,15 +59,21 @@ public class UserRestController {
 		// md5 알고리즘 - hashing(복호화 불가로 암호화 아님) => 프로젝트에는 다른 암호화 알고리즘 사용
 		// 아이디 : aaaa => 74b8733745420d4d33f80c4663dc5e5
 		// 비밀번호 : aaaa => 74b8733745420d4d33f80c4663dc5e5
+		// breakpoint 2
 		String hashedPassword = EncryptUtils.md5(password);
 		
 		// DB INSERT
-		
+		UserEntity user = userBO.addUser(loginId, hashedPassword, name, email);
 		
 		// 응답 값 breakpoint 1
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 200);
-		result.put("result", "성공");
+		if(user != null) {
+			result.put("code", 200);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "회원가입에 실패했습니다.");
+		}
 		return result;
 	}
 	
