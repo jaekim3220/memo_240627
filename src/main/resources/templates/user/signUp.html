@@ -167,7 +167,7 @@ layout:decorate="~{layout/defaultLayout}">
 					let url = $(this).attr("action"); // form 태그의 action 값을 추출
 					console.log(url);
 					
-					let params = $(this).serialize(); // form 태그의 name 속성과 value를 직렬화 => request 파라미터로 구성, 직렬화 : 전송을 위한 정렬
+					let params = $(this).serialize(); // form 태그의 name 속성과 value를 직렬화(입력값 불러오기) => request 파라미터로 구성, 직렬화 : 전송을 위한 정렬
 					console.log(params);
 					
 					
