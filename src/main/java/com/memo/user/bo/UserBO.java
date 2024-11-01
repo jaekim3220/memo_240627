@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.memo.common.EncryptUtils;
 import com.memo.user.entity.UserEntity;
 import com.memo.user.repository.UserRepository;
 
@@ -36,4 +37,17 @@ public class UserBO {
 				.email(email)
 				.build()); // Parameter를 Repository에 저장
 	}
+	
+	
+	// @PostMapping("/sign-in") 구현
+	// input : loginId, password
+	// output : UserEntity
+	public UserEntity getUserEntityByLoginIdPassword(String loginId, String password) {
+		// 비밀번호 hashing
+		String hashedPassword = EncryptUtils.md5(password);
+		
+		// 조회
+		return userRepository.findByLoginIdAndPassword(loginId, hashedPassword);
+	}
+	
 }

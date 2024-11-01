@@ -49,6 +49,14 @@ public class UserRestController {
 	
 	
 	// AJAX 통신 성공, 실패 여부 (JSON) return
+	/**
+	 * 회원가입
+	 * @param loginId
+	 * @param password
+	 * @param name
+	 * @param email
+	 * @return
+	 */
 	@PostMapping("/sign-up")
 	public Map<String, Object> signUp(
 			@RequestParam("loginId") String loginId,
@@ -73,6 +81,28 @@ public class UserRestController {
 		} else {
 			result.put("code", 500);
 			result.put("error_message", "회원가입에 실패했습니다.");
+		}
+		return result;
+	}
+	
+	
+	@PostMapping("/sign-in")
+	public Map<String, Object> signIn(
+			@RequestParam("loginId") String loginId,
+			@RequestParam("password") String password) {
+		
+		// DB SELECT breakpoint 2(데이터가 있는 경우 : user, 없는 경우 : null)
+		UserEntity user = userBO.getUserEntityByLoginIdPassword(loginId, password);
+		
+		
+		// 응답값 breakpoint 1(Console 창에서 쿼리문 확인)
+		Map<String, Object> result = new HashMap<>();
+		if(user != null) {
+			result.put("code", 200);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 300);
+			result.put("error_message", "존재하지 않는 사용자입니다.");
 		}
 		return result;
 	}
