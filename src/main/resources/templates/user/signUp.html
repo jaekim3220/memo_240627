@@ -171,7 +171,10 @@ layout:decorate="~{layout/defaultLayout}">
 					console.log(params);
 					
 					
-					// post 형식으로 변형, 요청
+					// post 형식으로 JSON 구현
+					// AJAX가 아닌 $.post 사용
+					// $.ajax는 GET, POST 메서드 중 선택해 데이터를 요청 
+					// $.post()메서드는 HTTP POST 요청만을 사용하여 서버에서 데이터를 요청
 					$.post(url, params) // request 영역
 					.done(function(data) { // response - callback 영역
 						if (data.code == 200) {
@@ -182,7 +185,7 @@ layout:decorate="~{layout/defaultLayout}">
 							// 로직 상 실패
 							alert(data.error_message);
 						}
-					}); // post 형식으로 변형, 요청 종료
+					}); // post 형식으로 JSON 구현 종료
 					
 					
 				}); // 회원가입 버튼 종료
