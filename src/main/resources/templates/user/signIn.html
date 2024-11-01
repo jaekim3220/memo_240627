@@ -9,13 +9,16 @@
 		
 		<!-- 키보드 Enter키로 로그인이 될 수 있도록 form 태그를 만들어준다.(submit 타입의 버튼이 동작됨) -->
 		<form id="loginForm" action="/user/sign-in" method="post">
+			
+			<!-- 아이디 -->
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">ID</span>
 				</div>
 				<input type="text" class="form-control" id="loginId" name="loginId">
 			</div>
-	
+			
+			<!-- 비밀번호 -->
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">PW</span>
