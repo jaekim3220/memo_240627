@@ -18,19 +18,19 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Getter
+@AllArgsConstructor // 파라미터가 모두 있는 생성자
+@NoArgsConstructor // 파라미터가 없는 생성자(기본)
+@Builder // Setter 대용 + update를 위해 toBuilder 추가, 필드 수정 허용
+@Getter // Getter
 @Table(name = "user")
-@Entity
+@Entity // JPA 엔티티 객체(사용하려면 lombok이 필요)
 public class UserEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // insert 이후 방금 들어간 id 가져옴
 	private int id;
 	
-	@Column(name = "loginId")
+	@Column(name = "loginId") // 카멜 케이스 설정
 	private String loginId;
 	
 	private String password;
@@ -39,11 +39,11 @@ public class UserEntity {
 	
 	private String email;
 
-	@CreationTimestamp
+	@CreationTimestamp // 값이 null 이어도 insert 되는 시간으로 설정
 	@Column(name = "createAt")
 	private LocalDateTime createAt;
 
-	@UpdateTimestamp
+	@UpdateTimestamp // insert, update 일 경우 해당 시간으로 설정
 	@Column(name = "updatedAt")
 	private LocalDateTime updatedAt;
 }
