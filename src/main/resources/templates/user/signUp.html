@@ -8,6 +8,10 @@ layout:decorate="~{layout/defaultLayout}">
 	<section layout:fragment="content" class="contents d-flex justify-content-center">
 		<div class="w-50 py-4">
 			<h1 class="mb-4">회원가입</h1>
+			
+			<!-- form 태그 3종 세트 : 
+			form 태그(method), name 속성(parameter), submit 타입(parameter 전송) -->
+			
 			<form id="signUpForm" method="post" action="/user/sign-up">
 				<table class="sign-up-table table table-bordered">
 					<tr>
@@ -104,6 +108,84 @@ layout:decorate="~{layout/defaultLayout}">
 					
 				}); // 중복확인 - 버튼 클릭 종료
 				
+				
+				// 회원가입 버튼
+				$("#signUpForm").on("submit", function(e) {
+					// alert("회원가입"); 아직 페이지 생성이 안 되서 404
+					// =>
+					e.preventDefault(); // submit 중단(페이지 이동 차단)
+					// alert("회원가입");
+					
+					// validation
+					let loginId = $("#loginId").val().trim();
+					let password = $("#password").val().trim();
+					let confirmPassword = $("#confirmPassword").val().trim();
+					let name = $("#name").val().trim();
+					let email = $("#email").val().trim();
+					
+					// 공백 처리
+					if(!loginId) {
+						alert("아이디를 입력하세요.");
+						return false; // submit일 경우 false
+					}
+					
+					if(!password || !confirmPassword) {
+						alert("비밀번호를 입력하세요.");
+						return false; // submit일 경우 false
+					}
+					if(password != confirmPassword) {
+						alert("비밀번호가 일치하지 않습니다..");
+						return false; // submit일 경우 false
+					}
+					
+					if(!name) {
+						alert("이름을 입력하세요.");
+						return false; // submit일 경우 false
+					}
+					
+					if(!email) {
+						alert("이메일을 입력하세요.");
+						return false; // submit일 경우 false
+					}
+					
+					
+					// loginId 중복 확인 후 사용 가능 여부 확인
+					// #idCheckOk에 d-none이 있으면 alert
+					if($("#idCheckOk").hasClass("d-none")) {
+						alert("아이디 중복을 확인해주세요.");
+						return false;
+					}
+					
+					
+					// 전송 1) : form 전송 => 다음 화면으로 이동(form은 restcontroller 불가)
+					/*
+					$(this)[0].submit(); // 0번째 form을 전송
+					*/
+					
+					// 전송 2) : AJAX 호출 => JSON 응답
+					// form 태그를 활용한 AJAX 호출
+					let url = $(this).attr("action"); // form 태그의 action 값을 추출
+					console.log(url);
+					
+					let params = $(this).serialize(); // form 태그의 name 속성과 value를 직렬화 => request 파라미터로 구성, 직렬화 : 전송을 위한 정렬
+					console.log(params);
+					
+					
+					// post 형식으로 변형, 요청
+					$.post(url, params) // request 영역
+					.done(function(data) { // response - callback 영역
+						if (data.code == 200) {
+							// 성공
+							alert("가입을 환영합니다. 로그인 해주세요.");
+							location.href = "/user/sign-in-view"; // 로그인 화면으로 이동
+						} else {
+							// 로직 상 실패
+							alert(data.error_message);
+						}
+					}); // post 형식으로 변형, 요청 종료
+					
+					
+				}); // 회원가입 버튼 종료
 				
 			});
 		</script>
