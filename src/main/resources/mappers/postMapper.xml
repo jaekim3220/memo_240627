@@ -9,4 +9,21 @@
  		FROM
  			`post`
  	</select>
+ 	
+ 	
+ 	<!-- @GetMapping("/post-list-view") XML 구현 -->
+ 	<select id="selectPostListByUserId" parameterType="int" resultType="com.memo.domain.Post">
+ 		SELECT
+ 			`id`, 
+ 			`userId`, 
+ 			`subject`, 
+ 			`content`, 
+ 			`imagePath`, 
+ 			`createdAt`, 
+ 			`updatedAt`
+ 		FROM 
+ 			`post`
+ 		WHERE
+ 			`userId` = #{userId}
+ 	</select>
  </mapper>
