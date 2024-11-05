@@ -96,7 +96,10 @@
     				// response
     				success:function(data) {
     					// 성공일 때 alert 후 목록 화면으로 이동
-    					if (data.code == 200) {
+    					if (data.code == 200) { // Dictionary 형태
+    						// Ajax의 응답은 String => JQuery의 함수가 JSON임을 알면
+    						// => Dictionary 형식으로 변경
+    						// {code:200, }
     						alert("메모가 저장되었습니다.");
     						location.href = "/post/post-list-view";
     					} else {
