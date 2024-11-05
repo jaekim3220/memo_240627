@@ -76,7 +76,38 @@
     			// console.log("content : " + content);
     			
     			
+    			// 이미지 저장(이미지는 form 태그 필수 => JS에서 구현 가능)
+    			// form을 JS에서 생성 후 AJAX에서 구현 가능
+    			// form 태그 3종 세트 : form 태그(method), name 속성(parameter), submit 타입(parameter 전송)
+    			let formData = new FormData();
+    			formData.append("subject", subject); // requestParameter 이름 + form 태그의 name
+    			formData.append("content", content);
     			
+    			// AJAX 요청
+    			$.ajax({
+    				// request
+    				type:"POST", // 용량이 큰 img 파일
+    				url:"/post/create",
+    				data:formData, // json, key-value, formData
+    				processData:false, // 파일 업로드 필수 설정(form)
+    				contentType:false, // 파일 업로드 필수 설정(form)
+    				enctype:"multipart/form-data", // 파일 업로드 필수 설정(form) - 이미지 인코딩
+    				
+    				// response
+    				success:function(data) {
+    					// 성공일 때 alert 후 목록 화면으로 이동
+    					if (data.code == 200) {
+    						alert("메모가 저장되었습니다.");
+    						location.href = "/post/post-list-view";
+    					} else {
+    						alert(data.error_message);
+    					}
+    				}, // 성공일 경우
+    				error:function(e) {
+    					alert("글을 저장하는데 실패했습니다.");
+    				}
+    				
+    			}); // AJAX 요청 종료
     		
     		}); // 글 저장 종료
     		
