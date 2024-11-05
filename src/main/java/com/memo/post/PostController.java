@@ -20,6 +20,12 @@ public class PostController {
 	@Autowired
 	private PostBO postBO;
 
+	/**
+	 * 글 목록
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/post-list-view")
 	// http:localhost/post/post-list-view
 	public String postListView(Model model, HttpSession session) {
@@ -41,4 +47,16 @@ public class PostController {
 		
 		return "post/postList";
 	}
+	
+	
+	/**
+	 * 글쓰기 화면
+	 * @return
+	 */
+	@GetMapping("/post-create-view") 
+	// http:localhost/post/post-create-view
+	public String postCreateView() {
+		return "post/postCreate";
+	}
+	
 }
