@@ -49,10 +49,11 @@ public class PostRestController {
 		
 		// 글쓴이 번호 추출(session) - 비로그인일 경우 에러 발생 - breakpoint
 		int userId = (int)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		
 		// DB INSERT (Entity 사용) - 성공한 행 수 - breakpoint
-		 int rowCount = postBO.addPost(userId, subject, content, file);
+		 int rowCount = postBO.addPost(userId, userLoginId, subject, content, file);
 		// int rowCount = 0; // 임시로 `실패` 형식 -> parameter 검증 작업(그림 유무에 따른 결과 확인 : null 유무)
 		
 		// Response(응답값) - breakpoint

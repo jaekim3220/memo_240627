@@ -33,13 +33,18 @@ public class PostBO {
 	// input : userId, subject, content, file
 	// output : int(성공한 행의 개수)
 	// @PostMapping("/create") 구현
-	public int addPost(int userId, String subject, 
+	public int addPost(int userId, String userLoginId,
+			String subject, 
 			String content, MultipartFile file) {
 		
 		String imagePath = null;
-		// TODO file to imagePath
-				
-		return postMapper.insertPost(userId, subject, content, imagePath);
+		// 파일이 있을 경우에만 업로드 => imagePath 추출
+		if(imagePath != null) {
+			// TODO
+		}
+			
+		return 0;
+		//return postMapper.insertPost(userId, subject, content, imagePath);
 	}
 	
 }
