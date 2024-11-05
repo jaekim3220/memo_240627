@@ -1,4 +1,4 @@
-package com.memo.post.bo;
+package com.memo.post;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.memo.post.bo.PostBO;
 import com.memo.post.entity.PostEntity;
 
 import jakarta.servlet.http.HttpServlet;

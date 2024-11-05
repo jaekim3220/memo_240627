@@ -41,7 +41,9 @@ public class PostController {
 		List<Post> postList = postBO.getPostListByUserId(userId);
 		
 		
-		// model에 담기
+		// MODEL 데이터 삽입 - breakpoint
+		// Controller가 Model에 데이터를 삽입
+		// HTML(VIEW)가 Model에서 꺼내서 사용
 		model.addAttribute("postList", postList);
 		
 		
