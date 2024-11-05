@@ -8,7 +8,13 @@ import com.memo.common.EncryptUtils;
 import com.memo.user.entity.UserEntity;
 import com.memo.user.repository.UserRepository;
 
-@Service
+/*
+DB연동 : View영역 <--> Controller영역(Domain) <--> Service(BO)영역 <--> Repository영역(Mapper) <--> DB영역 
+*/
+
+//Service(BO)영역
+
+@Service // Spring Bean 등록
 public class UserBO {
 
 	@Autowired
