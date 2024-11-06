@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.memo.common.FileManagerService;
 import com.memo.domain.Post;
 import com.memo.mapper.PostMapper;
 
@@ -21,6 +22,10 @@ public class PostBO {
 	
 	@Autowired
 	private PostMapper postMapper;
+	
+	@Autowired
+	private FileManagerService fileManager;
+	
 	
 	// input : int(userId)
 	// output : List<Post>
@@ -38,9 +43,9 @@ public class PostBO {
 			String content, MultipartFile file) {
 		
 		String imagePath = null;
-		// 파일이 있을 경우에만 업로드 => imagePath 추출
-		if(imagePath != null) {
-			// TODO
+		// 파일이 있을 경우에만 업로드 => imagePath 추출 - breakpoint
+		if(file != null) {
+			imagePath = fileManager.uploadFile(file, userLoginId); // 파일이 있는 경우에만 파일을 넘긴다
 		}
 			
 		return 0;
