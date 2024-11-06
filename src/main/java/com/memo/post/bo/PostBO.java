@@ -48,8 +48,8 @@ public class PostBO {
 			imagePath = fileManager.uploadFile(file, userLoginId); // 파일이 있는 경우에만 파일을 넘긴다
 		}
 			
-		return 0;
-		//return postMapper.insertPost(userId, subject, content, imagePath);
+		// return 0;
+		return postMapper.insertPost(userId, subject, content, imagePath);
 	}
 	
 }
