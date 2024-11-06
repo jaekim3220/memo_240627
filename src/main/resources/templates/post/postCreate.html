@@ -85,12 +85,14 @@
     				let extension = fileName.split(".").pop().toLowerCase();
     				// console.log(extension);
     				
+    				// 이미지 형시이 아닌 파일 선택 시 alert 띄운 후 파일 drop
     				if($.inArray(extension, ["jpg", "png", "gif"]) == -1) {
     					alert("이미지 파일만 업로드 할 수 있습니다.");
     					$("#file").val(""); // 파일 초기화
     					return;
     				}
     			}
+    			
     			
     			// alert("성공");
     			// return;
