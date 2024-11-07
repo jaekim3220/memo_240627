@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.memo.domain.Post;
 import com.memo.post.bo.PostBO;
@@ -59,6 +60,28 @@ public class PostController {
 	// http:localhost/post/post-create-view
 	public String postCreateView() {
 		return "post/postCreate";
+	}
+	
+	
+	// 글 상세 화면
+	@GetMapping("/post-detail-view")
+	// http:localhost/post/post-detail-view
+	public String postDetailView(
+			@RequestParam("postId") int postId, // postId와 일치하는 글 추출
+			HttpSession session,
+			Model model) {
+		
+		// DB DELECT(postId, userId) - breakpoint
+		int userId = (int)session.getAttribute("userId"); // UserRestController에서 정의한 변수
+		Post post = postBO.getPostByPostIdUserId(postId, userId);
+		
+		
+		// MODEL 데이터 삽입 - breakpoint
+		// Controller가 Model에 데이터를 삽입
+		// HTML(VIEW)가 Model에서 꺼내서 사용
+		model.addAttribute("post", post);
+		
+		return "post/postDetail";
 	}
 	
 }
