@@ -26,4 +26,11 @@ public interface PostMapper {
 			@Param("subject") String subject,
 			@Param("content") String content,
 			@Param("imagePath") String imagePath);
+	
+	
+	// input : userId, postId
+	// output : Post or null (단건)
+	// @GetMapping("/post-detail-view") 구현
+	public Post selectPostByPostIdUserId(@Param("postId") int postId, @Param("userId") int userId);
+	
 }

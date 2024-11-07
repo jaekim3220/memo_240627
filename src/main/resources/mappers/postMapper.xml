@@ -49,4 +49,24 @@
 		NOW()
  		)
  	</insert>
+ 	
+ 	
+ 	<!-- @GetMapping("/post-detail-view") 구현 -->
+ 	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.memo.domain.Post">
+ 		SELECT
+ 			`id`, 
+ 			`userId`, 
+ 			`subject`, 
+ 			`content`, 
+ 			`imagePath`, 
+ 			`createdAt`, 
+ 			`updatedAt`
+ 		FROM 
+ 			`post`
+ 		WHERE
+ 			`userId` = #{userId}
+ 			AND `id` = #{postId}
+ 			
+ 	</select>
+ 	
  </mapper>
