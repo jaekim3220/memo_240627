@@ -74,12 +74,11 @@
     				return;// subject일 경우 return flase, click일 경우 return
     			}
     			
-    			
     			// 이미지 때문에 form 태그를 JS에서 생성
     			let formData = new FormData();
     			
     			// formData 삽입
-    			formData.append("postid", postId);
+    			formData.append("postId", postId);
     			formData.append("subject", subject);
     			formData.append("content", content);
     			formData.append("file", $("#file")[0].files[0]); // 진짜 file 객체 삽입
