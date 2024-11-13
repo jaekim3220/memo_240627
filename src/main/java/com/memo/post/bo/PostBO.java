@@ -2,23 +2,34 @@ package com.memo.post.bo;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.memo.common.FileManagerService;
 import com.memo.domain.Post;
 import com.memo.mapper.PostMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 /*
 DB연동 : View영역 <--> Controller영역(Domain) <--> Service(BO)영역 <--> Repository영역(Mapper) <--> DB영역 
 */
 
 @Service
+@Slf4j
 public class PostBO {
+	
+	// log 사용법
+	// 1)
+	// private Logger log = LoggerFactory.getLogger(PostBO.class);
+	
+	// 2)
+	// private Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	
 
 	
 	@Autowired
@@ -59,6 +70,31 @@ public class PostBO {
 	// @GetMapping("/post-detail-view") 구현
 	public Post getPostByPostIdUserId(int postId, int userId) {
 		return postMapper.selectPostByPostIdUserId(postId, userId);
+	}
+	
+	
+	// input : userLoginId(파일), postId, userId, subject, content, file
+	// output : X
+	// @PutMapping("/update")
+	public void updatePostByPostIdUserId(String loginId, int postId, int userId, 
+			String subject, String content, MultipartFile file) {
+		
+		// 기존 글을 추출
+		// 1. 이미지 교체 시 기존 이미지 삭제
+		// 2. 업데이트 대상 존재 확인
+		Post post = postMapper.selectPostByPostIdUserId(postId, userId);
+		if(post == null) { // null 검사로 NPE 방지
+			// println()은 Thread Safe를 저하시켜 사용자에게 Lock을 걸어 웹 속도를 저하를 야기	 
+			log.info("[글 수정] post is null. postId:{}, userId:{}", postId, userId);
+			return ;
+		}
+		
+		log.info("[글 수정 테스트]. postId:{}, userId:{}", postId, userId);
+		// 파일 존재 시 새 이미지 업로드
+		
+		
+		// DB Update
+		
 	}
 	
 }
