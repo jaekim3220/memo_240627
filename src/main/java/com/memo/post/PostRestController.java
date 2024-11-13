@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,5 +77,37 @@ public class PostRestController {
 		
 		return result;
 		
+	}
+	
+	
+	// 글 수정 API
+	@PutMapping("/update")
+	// http:localhost/post/update
+	public Map<String, Object> update(
+			// 필수 파라미터 불러오기1 : value, required 생략 (추천) - null이 아닌 column - lesson03 참고
+			@RequestParam("postId") int postId,
+			@RequestParam("subject") String subject,
+			@RequestParam("content") String content,
+			// 비필수 파라미터 불러오기2 : 기본값 설정 (추천) - lesson03 참고
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			HttpSession session) {
+		
+		// session => userId(DB), userLoginId(파일 업로드) - breakpoint
+		// session에 담을 변수(parameter)가 기억나지 않을 경우
+		// UserRestController 참고
+		int userId = (int)session.getAttribute("userId"); // userId는 null 값 없음
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		
+		
+		// DB Update + 파일 업로드 - breakpoint
+		postBO.updatePostByPostIdUserId(userLoginId, postId, userId, subject, content, file);
+		
+		
+		// response(응답값)
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result;
 	}
 }
