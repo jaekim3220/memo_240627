@@ -63,7 +63,13 @@ public class PostController {
 	}
 	
 	
-	// 글 상세 화면
+	/**
+	 * 글 상세 화면
+	 * @param postId
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/post-detail-view")
 	// http:localhost/post/post-detail-view
 	public String postDetailView(

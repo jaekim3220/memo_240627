@@ -37,7 +37,14 @@ public class PostRestController {
 	@Autowired // annotation
 	private PostBO postBO; // DI(Dependency Injection)의존성 주입
 	
-
+	/**
+	 * 글쓰기 API
+	 * @param subject
+	 * @param content
+	 * @param file
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	// http:localhost/post/create
 	public Map<String, Object> create(
