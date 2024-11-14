@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.memo.post.bo.PostBO;
-import com.memo.post.entity.PostEntity;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpSession;
 
 /*
@@ -108,6 +107,29 @@ public class PostRestController {
 		result.put("code", 200);
 		result.put("result", "성공");
 		
+		return result;
+	}
+	
+	
+	// 글 삭제 API
+	@DeleteMapping("/delete")
+	public Map<String, Object> delete(
+			// 필수 파라미터 불러오기1 : value, required 생략 (추천) - null이 아닌 column - lesson03 참고
+			@RequestParam("postId") int postId,
+			HttpSession session) {
+		
+		// session => userId(DB), userLoginId(파일 업로드) - breakpoint
+		// session에 담을 변수(parameter)가 기억나지 않을 경우
+		// UserRestController 참고
+		int userId = (int)session.getAttribute("userId");
+		
+		// DB DELETE + 파일 업로드 - breakpoint
+		postBO.deletePostByPostIdUserId(postId, userId);
+		
+		// response(응답값) - breakpoint
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
 		return result;
 	}
 }
