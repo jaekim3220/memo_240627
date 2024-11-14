@@ -9,7 +9,10 @@ import java.nio.file.Paths;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component // Spring Bean 등록
+@Slf4j
 public class FileManagerService {
 
 	// 실제 업로드 된 이미지가 저장될 서버 경로
@@ -50,5 +53,46 @@ public class FileManagerService {
 		// => `/images/aaaa_17237482234/sun.png`
 		return "/images/" + directoryName + "/" + file.getOriginalFilename(); // 여기로 오면 성공
 	}
+	
+	
+	// 업로드된 이미지를 컴퓨터(서버)에서 삭제 : 삭제할 이미지 위치(주소) 추출 및 삭제 기능 구현
+	// input : imagePath
+	// output : X
+	public void deleteFile(String imagePath) {
+		// D:\\JAVA\\6_spring_project\\memo\\memo_workspace\\images/
+		// D:\\JAVA\\6_spring_project\\memo\\memo_workspace\\images//images/aaaa_1731496901756/teddy-8783348_1280.jpg
+		// /images/ 가 겹치므로 제거
+		
+		// 삭제 대상의 파일 경로
+		Path path = Paths.get(FILE_UPLOAD_PATH + imagePath.replace("/images/", ""));
+		
+		// 삭제할 파일(이미지)가 있는가
+		if(Files.exists(path)) {
+			// 서버에서 이미지 파일 삭제
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				// e.printStackTrace(); // => logging으로 대체
+				 log.info("[FileManagerService 파일 삭제] imagePath:{}", imagePath);
+				return;
+			}
+			
+			
+			// 서버에서 폴더(디렉토리) 삭제
+			path = path.getParent(); // 폴더 위치
+			
+			// 삭제할 폴더가 있는가
+			if(Files.exists(path)) {
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					log.info("[FileManagerService 폴더 삭제] imagePath:{}", imagePath);
+				}
+			}
+		}
+	}
+	
 	
 }

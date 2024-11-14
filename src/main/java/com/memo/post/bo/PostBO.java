@@ -77,9 +77,10 @@ public class PostBO {
 	public void updatePostByPostIdUserId(String loginId, int postId, int userId, 
 			String subject, String content, MultipartFile file) {
 		
-		// 기존 글을 추출
+		// 기존 이미지(경로) 추출
 		// 1. 이미지 교체 시 기존 이미지 삭제
 		// 2. 업데이트 대상 존재 확인
+		// 기존 이미지 경로
 		Post post = postMapper.selectPostByPostIdUserId(postId, userId);
 		if(post == null) { // null 검사로 NPE 방지
 			// logging을 사용한 확인
@@ -91,6 +92,26 @@ public class PostBO {
 		
 		
 		// 파일 존재 시 새 이미지 업로드
+		/*
+		기존 글에 이미지가 부재
+		- 파일 업로드 => 성공 시 DB 저장
+				=> 실패 시 DB 저장 X
+
+		기존 글에 이미지가 존재
+		- 파일 업로드 => 성공 시 기존 이미지 제거 후 DB 저장
+				=> 실패 시 기존 이미지 그대로, DB 저장 X
+		*/
+		String imagePath = null;
+		if (file != null) { // 새로 업로드 할 이미지가 존재할 경우
+			// 새로 업로드할 이미지 주소
+			imagePath = fileManager.uploadFile(file, loginId);
+			
+			// 새로운 이미지 업로드 성공 && 기존 이미지가 존재 시 삭제
+			if (imagePath != null && post.getImagePath() != null) {
+				// 폴더, 이미지 제거(컴퓨터-서버에서)
+				fileManager.deleteFile(post.getImagePath());
+			}
+		}
 		
 		
 		// DB Update
