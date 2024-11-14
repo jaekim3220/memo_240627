@@ -2,8 +2,6 @@ package com.memo.post.bo;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +17,7 @@ DB연동 : View영역 <--> Controller영역(Domain) <--> Service(BO)영역 <--> 
 */
 
 @Service
-@Slf4j
+@Slf4j // slf4j logger
 public class PostBO {
 	
 	// log 사용법
@@ -84,17 +82,18 @@ public class PostBO {
 		// 2. 업데이트 대상 존재 확인
 		Post post = postMapper.selectPostByPostIdUserId(postId, userId);
 		if(post == null) { // null 검사로 NPE 방지
-			// println()은 Thread Safe를 저하시켜 사용자에게 Lock을 걸어 웹 속도를 저하를 야기	 
+			// logging을 사용한 확인
 			log.info("[글 수정] post is null. postId:{}, userId:{}", postId, userId);
-			return ;
+			return;
 		}
+
+		log.info("[글 수정 테스트] postId:{}, userId:{}", postId, userId);
 		
-		log.info("[글 수정 테스트]. postId:{}, userId:{}", postId, userId);
+		
 		// 파일 존재 시 새 이미지 업로드
 		
 		
 		// DB Update
-		
 	}
 	
 }

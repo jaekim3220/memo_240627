@@ -95,7 +95,7 @@ public class PostRestController {
 		// session => userId(DB), userLoginId(파일 업로드) - breakpoint
 		// session에 담을 변수(parameter)가 기억나지 않을 경우
 		// UserRestController 참고
-		int userId = (int)session.getAttribute("userId"); // userId는 null 값 없음
+		int userId = (int)session.getAttribute("userId"); // 차후 권한 검사를 통해 발생한 에러를 처리할 목적
 		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		
