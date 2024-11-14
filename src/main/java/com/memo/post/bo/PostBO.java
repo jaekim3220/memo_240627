@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.memo.common.FileManagerService;
@@ -118,6 +119,35 @@ public class PostBO {
 		// DB Update - breakpoint
 		postMapper.updatePostByPostId(postId, subject, content, imagePath);
 		
+	}
+	
+	
+	
+	// 글 1개 삭제
+	// input: postId, userId
+	// output: X
+	// @DeleteMapping("/delete")
+	public void deletePostByPostIdUserId(int postId, int userId) {
+		
+		// 기존글 가져오기(postId, userId) => 이미지 존재 시 삭제 위해서
+		// DB 행 삭제 전 이미지 경로 확인 - breakpoint
+		Post post = postMapper.selectPostByPostIdUserId(postId, userId);
+		
+		if (post == null) {
+			log.info("[글 삭제] post is null. postId:{}, userId:{}", postId, userId);
+			return;
+		}
+		
+		
+		// DB 행 삭제 - breakpoint
+		int rowCount = postMapper.deletePostByPostId(postId);
+		
+		
+		// 기존글에 이미지가 있다면 폴더/파일 삭제 - breakpoint
+		if (rowCount > 0 && post.getImagePath() != null) {
+			// DB삭제 완료 && 기존글 이미지 존재 => 이미지 삭제
+			fileManager.deleteFile(post.getImagePath());
+		}
 	}
 	
 }
