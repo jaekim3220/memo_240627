@@ -118,18 +118,30 @@ public class PostRestController {
 			@RequestParam("postId") int postId,
 			HttpSession session) {
 		
-		// session => userId(DB), userLoginId(파일 업로드) - breakpoint
+		
+		// 로그인 여부 - breakpoint
+		// session => userId(DB)
 		// session에 담을 변수(parameter)가 기억나지 않을 경우
 		// UserRestController 참고
-		int userId = (int)session.getAttribute("userId");
+		Integer userId = (Integer)session.getAttribute("userId");
+		Map<String, Object> result = new HashMap<>();
+		if (userId == null) {
+			result.put("code", 403);
+			result.put("error_message", "로그인을 해주세요.");
+			return result;
+		}
+
 		
 		// DB DELETE + 파일 업로드 - breakpoint
 		postBO.deletePostByPostIdUserId(postId, userId);
 		
+		
 		// response(응답값) - breakpoint
-		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
 		result.put("result", "성공");
+		
 		return result;
 	}
+	
+	
 }
