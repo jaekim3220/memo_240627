@@ -84,4 +84,13 @@
 			`id` = #{postId}
 	</update>
  	
+ 	
+ 	<!-- @DeleteMapping("/delete") -->
+	<delete id="deletePostByPostId" parameterType="int">
+		DELETE
+		FROM
+			`post`
+		WHERE
+			`id` = #{postId}
+	</delete>
  </mapper>
