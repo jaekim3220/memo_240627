@@ -9,7 +9,7 @@
 		<h1>글 상세</h1>
 		
 		
-		<!-- [[${post}]] -->
+		<!-- [[${post}]] --> <!-- PostController 참고 -->
 		<!-- 제목 영역 -->
 		<input type="text" id="subject" class="form-control" placeholder="제목을 입력하세요" th:value="${post.subject}">
 		<!-- 내용 영역 -->
@@ -29,7 +29,7 @@
 		
 		<!-- 버튼 영역 -->
 		<div class="d-flex justify-content-between">
-			<button type="button" id="delBtn" class="btn btn-secondary">삭제</button>
+			<button type="button" id="delBtn" class="btn btn-secondary" th:data-post-id="${post.id}">삭제</button>
 			<div>
 				<a href="/post/post-list-view" class="btn btn-dark">목록</a>
 				<button type="button" id="saveBtn" class="btn btn-warning" th:data-post-id="${post.id}">수정</button>
@@ -133,6 +133,46 @@
     			
     			
     		}); // 글 상세 종료
+    		
+    		
+    		// 글 삭제
+    		$("#delBtn").on("click", function(e) {
+    			e.preventDefault();
+    			
+    			// 삭제 버튼의 id 값 추출
+    			let postId = $(this).data("post-id");
+    			// console.log(postId);
+    			// return;
+    			
+    			
+    			// AJAX 요청
+    			// Restcontroller 생성 전까지 404
+    			$.ajax({
+    				// request
+    				type:"delete",
+    				url:"/post/delete",
+    				data:{"postId":postId},
+    				
+    				// response
+    				success:function(data) {// Dictionary 형태
+						// Ajax의 응답은 String => JQuery의 함수가 JSON임을 알면
+						// => Dictionary 형식으로 변경
+						// {code:200, "result":"성공"}
+    					if(data.code == 200) {
+    						alert("글이 삭제되었습니다.");
+    						location.href = "/post/post-list-view";
+    					} else {
+    						alert(data.error_message);
+    					}
+    				},
+    				error:function(e) {
+    					alert("메모를 수정하는데 실패했습니다.");
+    				}
+    			});
+    			
+    		}); // 글 삭제 종료
+    		
+    		
     	});
     	
     </script>
