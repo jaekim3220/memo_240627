@@ -2,6 +2,7 @@ package com.memo.post.bo;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,7 +78,7 @@ public class PostBO {
 	public void updatePostByPostIdUserId(String loginId, int postId, int userId, 
 			String subject, String content, MultipartFile file) {
 		
-		// 기존 이미지(경로) 추출
+		// 기존 이미지(경로) 추출 - breakpoint
 		// 1. 이미지 교체 시 기존 이미지 삭제
 		// 2. 업데이트 대상 존재 확인
 		// 기존 이미지 경로
@@ -91,7 +92,7 @@ public class PostBO {
 		log.info("[글 수정 테스트] postId:{}, userId:{}", postId, userId);
 		
 		
-		// 파일 존재 시 새 이미지 업로드
+		// 파일 존재 시 새 이미지 업로드 - breakpoint
 		/*
 		기존 글에 이미지가 부재
 		- 파일 업로드 => 성공 시 DB 저장
@@ -114,7 +115,9 @@ public class PostBO {
 		}
 		
 		
-		// DB Update
+		// DB Update - breakpoint
+		postMapper.updatePostByPostId(postId, subject, content, imagePath);
+		
 	}
 	
 }

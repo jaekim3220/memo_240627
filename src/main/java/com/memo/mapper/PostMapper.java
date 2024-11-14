@@ -32,5 +32,15 @@ public interface PostMapper {
 	// output : Post or null (단건)
 	// @GetMapping("/post-detail-view") 구현
 	public Post selectPostByPostIdUserId(@Param("postId") int postId, @Param("userId") int userId);
+
+	
+	// input : postId, subject, content, imagePath
+	// output : int or void
+	// @PutMapping("/update") 구현
+	public void updatePostByPostId(
+			@Param("postId") int postId,
+			@Param("subject") String subject,
+			@Param("content") String content,
+			@Param("imagePath") String imagePath);
 	
 }
