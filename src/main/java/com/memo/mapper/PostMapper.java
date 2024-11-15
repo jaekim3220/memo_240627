@@ -13,9 +13,18 @@ public interface PostMapper {
 
 	public List<Map<String, Object>> selectPostList();
 	
-	// input : int(userId)
+	// input : int(userId) + 페이징 정보
 	// output : List<Post>
-	public List<Post> selectPostListByUserId(int userId);
+	/*
+	`내림차순`으로 정렬한 postList를 `다음버튼` 클릭으로 내림차순으로 나열, 
+ 	`이전버튼` 클릭으로  이전 목록이 있는 postList를 역순으로 정렬해 나열하는 기능, 
+ 	아무 버튼을 누르지 않았을 때의 기능을 구현하기 위한 메서드
+ 	*/
+	public List<Post> selectPostListByUserId(
+			@Param("userId") int userId, 
+			@Param("standardId") Integer standardId, 
+			@Param("direction") String direction, 
+			@Param("limit") int limit);
 	
 	
 	// input : params

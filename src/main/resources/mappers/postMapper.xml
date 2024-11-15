@@ -12,7 +12,10 @@
  	
  	
  	<!-- @GetMapping("/post-list-view") XML 구현 -->
- 	<select id="selectPostListByUserId" parameterType="int" resultType="com.memo.domain.Post">
+ 	<!-- `내림차순`으로 정렬한 postList를 `다음버튼` 클릭으로 내림차순으로 나열, 
+ 	`이전버튼` 클릭으로  이전 목록이 있는 postList를 역순으로 정렬해 나열하는 기능, 
+ 	아무 버튼을 누르지 않았을 때의 기능을 구현하기 위한 쿼리문 -->
+ 	<select id="selectPostListByUserId" parameterType="map" resultType="com.memo.domain.Post">
  		SELECT
  			`id`, 
  			`userId`, 
@@ -25,6 +28,24 @@
  			`post`
  		WHERE
  			`userId` = #{userId}
+	 		<if test="direction == 'next'">
+	 		<![CDATA[
+	 		AND `id` < #{standardId}
+	 		]]>
+	 		ORDER BY `id` DESC
+	 		</if>
+	 		
+	 		<if test="direction == 'prev'">
+	 		<![CDATA[
+	 		AND `id` > #{standardId}
+	 		]]>
+	 		ORDER BY `id` ASC
+	 		</if>
+ 		
+	 		<if test="direction == 'null'">
+	 		ORDER BY `id` DESC
+	 		</if>
+ 		LIMIT ${limit} <!-- #은 `(백틱)으로 감싸는 형태 -->
  	</select>
  	
  	
