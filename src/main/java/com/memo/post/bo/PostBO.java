@@ -39,6 +39,11 @@ public class PostBO {
 	private FileManagerService fileManager;
 	
 	
+    // 페이징 정보 필드(limit) 
+    // 화면에 보여줄 post의 개수 설정
+    private static final int POST_MAX_SIZE = 3; 
+    
+	
 	// input : int(userId)
 	// output : List<Post>
 	// @GetMapping("/post-list-view") 구현
