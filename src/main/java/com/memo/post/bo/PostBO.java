@@ -2,10 +2,8 @@ package com.memo.post.bo;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.memo.common.FileManagerService;
@@ -47,8 +45,20 @@ public class PostBO {
 	// input : int(userId)
 	// output : List<Post>
 	// @GetMapping("/post-list-view") 구현
-	public List<Post> getPostListByUserId(int userId) {
-		return postMapper.selectPostListByUserId(userId);
+	public List<Post> getPostListByUserId(int userId, Integer prevId, Integer nextId) {
+		// 게시글 번호 : 1 9 10 | 11 12 13 | 14 15 16 | 17 18
+		// 만약 14 15 16 페이지에 있을 때
+		// 1) 다음버튼(nextId가 존재) : 16 보다 작은 3개 desc
+		// 2) 이전버튼(prevId가 존재) : 14 보다 큰 3개 asc => 13 12 11으로 역순 나열 => BO에서 리스크 reverse 기능으로 11 12 13으로 정방향 나여
+		// 3) 페이징 없음(nextId, prevId 모두 부재) : 최신 순서로 3개 desc
+		
+		// XML에서 하나의 쿼리로 만들기 위해 변수를 정제 - breakpoint
+		
+		// 이전버튼
+		
+		// 다음버튼
+		
+		// 페이징 없음
 	}
 	
 
