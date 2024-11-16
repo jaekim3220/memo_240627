@@ -1,5 +1,6 @@
 package com.memo.post.bo;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +54,29 @@ public class PostBO {
 		// 3) 페이징 없음(nextId, prevId 모두 부재) : 최신 순서로 3개 desc
 		
 		// XML에서 하나의 쿼리로 만들기 위해 변수를 정제 - breakpoint
+		Integer standardId = null; // 방향 기준 id(prev 또는 next) - prev, next 여부에 따라서 id 값이 다르게 할당됨
+		String direction = null; // 페이지 변경 방향(prev 또는 next)
 		
-		// 이전버튼
+		if(prevId != null) { // 2) 이전버튼 - breakpoint
+			standardId = prevId;
+			direction = "prev";
+			
+			// 역순으로 생성 - breakpoint
+			// 1) row 불러오기
+			List<Post> postList = postMapper.selectPostListByUserId(userId, standardId, direction, POST_MAX_SIZE);
+			// 2) 역순 정렬
+			Collections.reverse(postList); // 순서 뒤집고 저장
+			
+			return postList;
+		} else if(nextId != null) { // 1) 다음버튼
+			standardId = nextId;
+			direction = "next";
+			
+		}
 		
-		// 다음버튼
-		
-		// 페이징 없음
+		// 3) 페이징 없음 또는 => 1) 다음버튼 - breakpoint
+		// 받아온 userId(작성자), standardId(방향 기준 id), direction(페이지 변경 방향), 화면에 보여줄 post의 개수
+		return postMapper.selectPostListByUserId(userId, standardId, direction, POST_MAX_SIZE);
 	}
 	
 
