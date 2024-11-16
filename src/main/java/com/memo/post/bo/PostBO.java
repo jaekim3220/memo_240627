@@ -79,6 +79,18 @@ public class PostBO {
 		return postMapper.selectPostListByUserId(userId, standardId, direction, POST_MAX_SIZE);
 	}
 	
+	
+	// 이전 페이지의 마지막인가?
+	public boolean isPrevLastPageByUserId(int userId, int prevId) {
+		int maxPostId = postMapper.selectPostIdByUserIdAsSort(userId, "desc");
+		return maxPostId == prevId ? true : false; // 삼항 연산자
+	}
+	
+	// 다음 페이지의 마지막인가?
+	public boolean isNextLastPageByUserId(int userId, int nextId) {
+		int minPostId = postMapper.selectPostIdByUserIdAsSort(userId, "asc");
+		return minPostId == nextId ? true : false;
+	}
 
 	// input : userId, subject, content, file
 	// output : int(성공한 행의 개수)

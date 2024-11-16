@@ -27,6 +27,12 @@ public interface PostMapper {
 			@Param("limit") int limit);
 	
 	
+	/* 페이징 버튼 말소 기능을 위한 postId(글 id) 추출 메서드 */
+	public int selectPostIdByUserIdAsSort(
+			@Param("userId") int userId,
+			@Param("sort") String sort);
+	
+	
 	// input : params
 	// output : int or void
 	// @PostMapping("/create") 구현
