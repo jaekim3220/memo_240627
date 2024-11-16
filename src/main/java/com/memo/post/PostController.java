@@ -53,6 +53,20 @@ public class PostController {
 			nextId = postList.get(postList.size() - 1).getId(); // 가장 마지막 칸의 post 객체(행) 추출 + 해당 글 번호(id) 추출
 			prevId = postList.get(0).getId(); // 첫 번째 칸 id
 			
+			
+			// 더 이상 받아 올 이전 post 데이터가 없다면 0 - breakpoint
+			// 유저가 쓴 글들 중 제일 큰 숫자 하나가 prevId와 같을 때 더 이상 없음
+			if(postBO.isPrevLastPageByUserId(userId, prevId)) {
+				prevId = 0;
+			}
+			
+			
+			// 더 이상 받아 올 다음 post 데이터가 없다면 0 - breakpoint
+			// 유저가 쓴 글들 중 제일 큰 숫자 하나가 nextId와 같을 때 더 이상 없음
+			if(postBO.isNextLastPageByUserId(userId, nextId)) {
+				nextId = 0;
+			}
+			
 		}
 		
 		
