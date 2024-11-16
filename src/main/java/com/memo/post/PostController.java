@@ -29,7 +29,11 @@ public class PostController {
 	 */
 	@GetMapping("/post-list-view")
 	// http:localhost/post/post-list-view
-	public String postListView(Model model, HttpSession session) {
+	public String postListView(
+			// 비필수 parameter
+			@RequestParam(value = "prevId", required = false) Integer prevIdParam,
+			@RequestParam(value = "nextId", required = false) Integer nextIdParam,
+			Model model, HttpSession session) {
 		
 		// 로그인 여부 확인(권한 검사) breakpoint 1
 		Integer userId = (Integer)session.getAttribute("userId"); // UserRestContoller에서 type 확인 + null 가능성이 있으므로 wrapper class로
@@ -39,13 +43,25 @@ public class PostController {
 		}
 		
 		// DB SELECT => 본인((로그인한 사람)이 쓴 글 : session을 통해 수령 breakpoint 2
-		List<Post> postList = postBO.getPostListByUserId(userId);
+		List<Post> postList = postBO.getPostListByUserId(userId, prevIdParam, nextIdParam);
+		int prevId = 0;
+		int nextId = 0;
+		
+		// 공백 처리 - breakpoint
+		if(postList.isEmpty() == false) { // postList가 비어있지 않을 때 페이징 정보 세팅
+			// 버튼을 클릭하면 이전/다음 버튼에 따라 서로 다른 Id 값 할당
+			nextId = postList.get(postList.size() - 1).getId(); // 가장 마지막 칸의 post 객체(행) 추출 + 해당 글 번호(id) 추출
+			prevId = postList.get(0).getId(); // 첫 번째 칸 id
+			
+		}
 		
 		
 		// MODEL 데이터 삽입 - breakpoint
 		// Controller가 Model에 데이터를 삽입
 		// HTML(VIEW)가 Model에서 꺼내서 사용
 		model.addAttribute("postList", postList);
+		model.addAttribute("nextId", nextId);
+		model.addAttribute("prevId", prevId);
 		
 		
 		return "post/postList";
