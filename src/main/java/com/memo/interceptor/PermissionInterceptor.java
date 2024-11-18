@@ -49,6 +49,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 			// 원래 가져고 했던 컨트롤러 수행 방지
 			return false;
 		}
+		// 소스 트리(이슈 주석 추가)
 		
 		return true;
 	}
