@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FileManagerService {
 
 	// 실제 업로드 된 이미지가 저장될 서버 경로
+	// static을 선언해 메서드 시작부터 끝까지 static 함수나 static 변수를 메모리에 적제
 	public static final String FILE_UPLOAD_PATH = "D:\\JAVA\\6_spring_project\\memo\\memo_workspace\\images/";
 	
 	
